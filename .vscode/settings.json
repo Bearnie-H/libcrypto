@@ -1,0 +1,19 @@
+{
+    "files.associations": {
+        "libcrypto_test.h": "c",
+        "aes_test.h": "c",
+        "cipher.h": "c",
+        "chacha.h": "c",
+        "chacha_test.h": "c",
+        "aes_context.h": "c",
+        "string.h": "c",
+        "aes_round.h": "c",
+        "aes.h": "c",
+        "aes_constants.h": "c",
+        "stdint.h": "c",
+        "libcrypto.h": "c",
+        "chacha_context.h": "c",
+        "chacha_constants.h": "c",
+        "chacha_round.h": "c"
+    }
+}
