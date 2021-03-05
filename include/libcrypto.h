@@ -230,7 +230,8 @@ void Cipher_Release(Cipher_t *Cipher);
 
 #if defined(TESTING) || defined(DEBUGGER)
 
-#include "libcrypto_test.h"
+int Test_Libcrypto(void);
+
 
 #endif
 

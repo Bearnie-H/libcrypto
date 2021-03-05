@@ -4,6 +4,10 @@
 
 #if defined(TESTING) || defined(DEBUGGER)
 
+#include "../src/AES/include/AES.h"
+#include "../src/ChaCha/include/ChaCha.h"
+#include "../src/cipher/include/cipher.h"
+
 int Test_Libcrypto(void) {
 
     int FailedTests = 0;

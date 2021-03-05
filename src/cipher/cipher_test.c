@@ -5,6 +5,7 @@
 
 #include "../../include/libcrypto.h"
 #include "../AES/include/AES.h"
+#include "../ChaCha/include/ChaCha.h"
 #include "include/cipher.h"
 
 int Test_Cipher(void) {
