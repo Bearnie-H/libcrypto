@@ -89,12 +89,13 @@ int Cipher_Encrypt_AES_CFB(Cipher_t *Cipher,
 
     while (Length >= BlockBytes) {
 
-        if (0 != Cipher->Encrypt(Cipher->Context, IV, BlockBytes, Ciphertext)) {
+        if (0 != Cipher->Encrypt(Cipher->Context, IV, BlockBytes, Cipher->SpareBlock)) {
             return 1;
         }
 
-        BlockXOR(Ciphertext, In, BlockBytes);
-        memcpy(IV, Ciphertext, BlockBytes);
+        BlockXOR(Cipher->SpareBlock, In, BlockBytes);
+        memcpy(IV, Cipher->SpareBlock, BlockBytes);
+        memcpy(Ciphertext, Cipher->SpareBlock, BlockBytes);
 
         In += BlockBytes;
         Ciphertext += BlockBytes;
@@ -109,9 +110,10 @@ int Cipher_Encrypt_AES_CFB(Cipher_t *Cipher,
         return 1;
     }
 
+    BlockXOR(Cipher->SpareBlock, In, Length);
+    memcpy(IV, Cipher->SpareBlock, BlockBytes);
     memcpy(Ciphertext, Cipher->SpareBlock, Length);
     memset(Cipher->SpareBlock, 0x00, BlockBytes);
-    BlockXOR(Ciphertext, In, Length);
 
     return 0;
 }
@@ -131,8 +133,9 @@ int Cipher_Encrypt_AES_OFB(Cipher_t *Cipher,
             return 1;
         }
 
-        memcpy(Ciphertext, IV, BlockBytes);
-        BlockXOR(Ciphertext, In, BlockBytes);
+        memcpy(Cipher->SpareBlock, IV, BlockBytes);
+        BlockXOR(Cipher->SpareBlock, In, BlockBytes);
+        memcpy(Ciphertext, Cipher->SpareBlock, BlockBytes);
 
         In += BlockBytes;
         Ciphertext += BlockBytes;
@@ -146,8 +149,11 @@ int Cipher_Encrypt_AES_OFB(Cipher_t *Cipher,
     if (0 != Cipher->Encrypt(Cipher->Context, IV, BlockBytes, IV)) {
         return 1;
     }
-    memcpy(Ciphertext, IV, Length);
-    BlockXOR(Ciphertext, In, Length);
+
+    memcpy(Cipher->SpareBlock, IV, BlockBytes);
+    BlockXOR(Cipher->SpareBlock, In, Length);
+    memcpy(Ciphertext, Cipher->SpareBlock, Length);
+    memset(Cipher->SpareBlock, 0x00, BlockBytes);
 
     return 1;
 }
@@ -163,11 +169,13 @@ int Cipher_Encrypt_AES_CTR(Cipher_t *Cipher,
 
     while (Length >= BlockBytes) {
 
-        if (0 != Cipher->Encrypt(Cipher->Context, IV, BlockBytes, Ciphertext)) {
+        if (0 != Cipher->Encrypt(Cipher->Context, IV, BlockBytes, Cipher->SpareBlock)) {
             return 1;
         }
 
-        BlockXOR(Ciphertext, In, BlockBytes);
+        BlockXOR(Cipher->SpareBlock, In, BlockBytes);
+        memcpy(Ciphertext, Cipher->SpareBlock, BlockBytes);
+
         Cipher->IncrementCounter(IV);
 
         In += BlockBytes;
@@ -183,8 +191,9 @@ int Cipher_Encrypt_AES_CTR(Cipher_t *Cipher,
         return 1;
     }
 
+    BlockXOR(Cipher->SpareBlock, In, Length);
     memcpy(Ciphertext, Cipher->SpareBlock, Length);
-    BlockXOR(Ciphertext, In, Length);
+
     Cipher->IncrementCounter(IV);
 
     return 0;

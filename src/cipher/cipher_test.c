@@ -68,26 +68,28 @@ int Test_Cipher_Modes(void) {
 
 int Test_Cipher_AES_ECB(void) {
 
+    Cipher_t *Cipher;
     const char TestMessage[] = "Hello world! This is a test message to encrypt!";
-    char Temp[sizeof(TestMessage)] = {0x00};
     char RoundTripMessage[sizeof(TestMessage)] = {0x00};
+    memcpy(RoundTripMessage, TestMessage, sizeof(TestMessage));
 
-    Cipher_t *Cipher = Cipher_Prepare(AES_128, Cipher_Mode_ECB, AES_Test_Key_128, NULL);
+    Cipher = Cipher_Prepare(AES_128, Cipher_Mode_ECB, AES_Test_Key_128, NULL);
     if (NULL == Cipher) {
         printf("Test_Cipher_AES_ECB() Failure: Failed to create testing Cipher!\n");
         return 1;
     }
 
-    if (0 !=
-        Cipher_Encrypt(
-            Cipher, (const void *)&(TestMessage[0]), sizeof(TestMessage), (uint8_t *)&(Temp[0]))) {
+    if (0 != Cipher_Encrypt(Cipher,
+                            (const void *)&(RoundTripMessage[0]),
+                            sizeof(RoundTripMessage),
+                            (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_ECB() Failure: Error occured during Cipher_Encrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
     }
 
     if (0 != Cipher_Decrypt(Cipher,
-                            (const void *)&(Temp[0]),
+                            (const void *)&(RoundTripMessage[0]),
                             sizeof(RoundTripMessage),
                             (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_ECB() Failure: Error occured during Cipher_Decrypt()!\n");
@@ -108,27 +110,30 @@ int Test_Cipher_AES_ECB(void) {
 
 int Test_Cipher_AES_CBC(void) {
 
+    Cipher_t *Cipher;
     const char TestMessage[] = "Hello world! This is a test message to encrypt!";
-    char Temp[sizeof(TestMessage)];
-    char RoundTripMessage[sizeof(TestMessage)];
+    char RoundTripMessage[sizeof(TestMessage)] = {0x00};
+    memcpy(RoundTripMessage, TestMessage, sizeof(TestMessage));
 
-    Cipher_t *Cipher = Cipher_Prepare(AES_128, Cipher_Mode_CBC, AES_Test_Key_128, NULL);
+    Cipher = Cipher_Prepare(AES_128, Cipher_Mode_CBC, AES_Test_Key_128, NULL);
     if (NULL == Cipher) {
         printf("Test_Cipher_AES_CBC() Failure: Failed to create testing Cipher!\n");
         return 1;
     }
 
-    if (0 !=
-        Cipher_Encrypt(
-            Cipher, (const void *)&(TestMessage[0]), sizeof(TestMessage), (uint8_t *)&(Temp[0]))) {
+    if (0 != Cipher_Encrypt(Cipher,
+                            (const void *)&(RoundTripMessage[0]),
+                            sizeof(RoundTripMessage),
+                            (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_CBC() Failure: Error occured during Cipher_Encrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
     }
 
-    if (0 !=
-        Cipher_Decrypt(
-            Cipher, (const void *)&(Temp[0]), sizeof(Temp), (uint8_t *)&(RoundTripMessage[0]))) {
+    if (0 != Cipher_Decrypt(Cipher,
+                            (const void *)&(RoundTripMessage[0]),
+                            sizeof(RoundTripMessage),
+                            (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_CBC() Failure: Error occured during Cipher_Decrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
@@ -147,26 +152,28 @@ int Test_Cipher_AES_CBC(void) {
 
 int Test_Cipher_AES_CFB(void) {
 
+    Cipher_t *Cipher;
     const char TestMessage[] = "Hello world! This is a test message to encrypt!";
-    char Temp[sizeof(TestMessage)] = {0x00};
     char RoundTripMessage[sizeof(TestMessage)] = {0x00};
+    memcpy(RoundTripMessage, TestMessage, sizeof(TestMessage));
 
-    Cipher_t *Cipher = Cipher_Prepare(AES_128, Cipher_Mode_CFB, AES_Test_Key_128, NULL);
+    Cipher = Cipher_Prepare(AES_128, Cipher_Mode_CFB, AES_Test_Key_128, NULL);
     if (NULL == Cipher) {
         printf("Test_Cipher_AES_CFB() Failure: Failed to create testing Cipher!\n");
         return 1;
     }
 
-    if (0 !=
-        Cipher_Encrypt(
-            Cipher, (const void *)&(TestMessage[0]), sizeof(TestMessage), (uint8_t *)&(Temp[0]))) {
+    if (0 != Cipher_Encrypt(Cipher,
+                            (const void *)&(RoundTripMessage[0]),
+                            sizeof(RoundTripMessage),
+                            (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_CFB() Failure: Error occured during Cipher_Encrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
     }
 
     if (0 != Cipher_Decrypt(Cipher,
-                            (const void *)&(Temp[0]),
+                            (const void *)&(RoundTripMessage[0]),
                             sizeof(RoundTripMessage),
                             (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_CFB() Failure: Error occured during Cipher_Decrypt()!\n");
@@ -187,26 +194,28 @@ int Test_Cipher_AES_CFB(void) {
 
 int Test_Cipher_AES_OFB(void) {
 
+    Cipher_t *Cipher;
     const char TestMessage[] = "Hello world! This is a test message to encrypt!";
-    char Temp[sizeof(TestMessage)];
-    char RoundTripMessage[sizeof(TestMessage)];
+    char RoundTripMessage[sizeof(TestMessage)] = {0x00};
+    memcpy(RoundTripMessage, TestMessage, sizeof(TestMessage));
 
-    Cipher_t *Cipher = Cipher_Prepare(AES_128, Cipher_Mode_OFB, AES_Test_Key_128, NULL);
+    Cipher = Cipher_Prepare(AES_128, Cipher_Mode_OFB, AES_Test_Key_128, NULL);
     if (NULL == Cipher) {
         printf("Test_Cipher_AES_OFB() Failure: Failed to create testing Cipher!\n");
         return 1;
     }
 
-    if (0 !=
-        Cipher_Encrypt(
-            Cipher, (const void *)&(TestMessage[0]), sizeof(TestMessage), (uint8_t *)&(Temp[0]))) {
+    if (0 != Cipher_Encrypt(Cipher,
+                            (const void *)&(RoundTripMessage[0]),
+                            sizeof(RoundTripMessage),
+                            (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_OFB() Failure: Error occured during Cipher_Encrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
     }
 
     if (0 != Cipher_Decrypt(Cipher,
-                            (const void *)&(Temp[0]),
+                            (const void *)&(RoundTripMessage[0]),
                             sizeof(RoundTripMessage),
                             (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_OFB() Failure: Error occured during Cipher_Decrypt()!\n");
@@ -227,26 +236,28 @@ int Test_Cipher_AES_OFB(void) {
 
 int Test_Cipher_AES_CTR(void) {
 
+    Cipher_t *Cipher;
     const char TestMessage[] = "Hello world! This is a test message to encrypt!";
-    char Temp[sizeof(TestMessage)];
-    char RoundTripMessage[sizeof(TestMessage)];
+    char RoundTripMessage[sizeof(TestMessage)] = {0x00};
+    memcpy(RoundTripMessage, TestMessage, sizeof(TestMessage));
 
-    Cipher_t *Cipher = Cipher_Prepare(AES_128, Cipher_Mode_CTR, AES_Test_Key_128, NULL);
+    Cipher = Cipher_Prepare(AES_128, Cipher_Mode_CTR, AES_Test_Key_128, NULL);
     if (NULL == Cipher) {
         printf("Test_Cipher_AES_CTR() Failure: Failed to create testing Cipher!\n");
         return 1;
     }
 
-    if (0 !=
-        Cipher_Encrypt(
-            Cipher, (const void *)&(TestMessage[0]), sizeof(TestMessage), (uint8_t *)&(Temp[0]))) {
+    if (0 != Cipher_Encrypt(Cipher,
+                            (const void *)&(RoundTripMessage[0]),
+                            sizeof(RoundTripMessage),
+                            (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_CTR() Failure: Error occured during Cipher_Encrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
     }
 
     if (0 != Cipher_Decrypt(Cipher,
-                            (const void *)&(Temp[0]),
+                            (const void *)&(RoundTripMessage[0]),
                             sizeof(RoundTripMessage),
                             (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_CTR() Failure: Error occured during Cipher_Decrypt()!\n");
@@ -267,27 +278,29 @@ int Test_Cipher_AES_CTR(void) {
 
 int Test_Cipher_ChaCha(void) {
 
+    Cipher_t *Cipher;
     const char TestMessage[] = "This is a testing message for the ChaCha20 encryption algorithm. "
                                "This is longer than one block!";
-    char Temp[sizeof(TestMessage)] = {0x00};
     char RoundTripMessage[sizeof(TestMessage)] = {0x00};
+    memcpy(RoundTripMessage, TestMessage, sizeof(TestMessage));
 
-    Cipher_t *Cipher = Cipher_Prepare(ChaCha20, Cipher_Mode_ECB, ChaCha_Test_Key_256, NULL);
+    Cipher = Cipher_Prepare(ChaCha20, Cipher_Mode_ECB, ChaCha_Test_Key_256, NULL);
     if (NULL == Cipher) {
         printf("Test_Cipher_ChaCha() Failure: Failed to create testing Cipher!\n");
         return 1;
     }
 
-    if (0 !=
-        Cipher_Encrypt(
-            Cipher, (const void *)&(TestMessage[0]), sizeof(TestMessage), (uint8_t *)&(Temp))) {
+    if (0 != Cipher_Encrypt(Cipher,
+                            (const void *)&(RoundTripMessage[0]),
+                            sizeof(RoundTripMessage),
+                            (uint8_t *)&(RoundTripMessage))) {
         printf("Test_Cipher_ChaCha() Failure: Error occured during Cipher_Encrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
     }
 
     if (0 != Cipher_Decrypt(Cipher,
-                            (const void *)&(Temp[0]),
+                            (const void *)&(RoundTripMessage[0]),
                             sizeof(RoundTripMessage),
                             (uint8_t *)&(RoundTripMessage))) {
         printf("Test_Cipher_ChaCha() Failure: Error occured during Cipher_Decrypt()!\n");

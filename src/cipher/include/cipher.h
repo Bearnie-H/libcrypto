@@ -8,6 +8,12 @@ extern "C" {
 #include "../../../include/libcrypto.h"
 #include "../../AES/include/AES.h"
 
+#define CIPHER_STREAM_BUFFER_SIZE ( 1 << 12 )
+#define CIPHER_MIN_READ_SIZE ( 1 << 4 )
+
+/*
+    Function typedefs for use within the Cipher_t object.
+*/
 typedef int (*EncryptFunc)(void *, const void *, size_t, uint8_t *);
 typedef int (*DecryptFunc)(void *, const void *, size_t, uint8_t *);
 

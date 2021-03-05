@@ -21,6 +21,7 @@ extern "C" {
 */
 #include <stddef.h>
 #include <stdint.h>
+#include <sys/types.h>
 
 /*
     Cipher_t
@@ -193,10 +194,37 @@ int Cipher_Update_IV(Cipher_t *Cipher, const void *IV);
 int Cipher_Encrypt(Cipher_t *Cipher, const void *Plaintext, size_t Length, uint8_t *Ciphertext);
 
 /*
+    Cipher_Encrypt_Stream
+
+    This fucnction will use the Cipher_t to Encrypt the given stream,
+    represented by the file descriptor fd_In, writing the resulting
+    output to the file descriptor fd_Out. These may be any file descriptors
+    capable of being operated on by the standard read() and write() calls.
+    These file descriptors are not owned by this function, and must be
+    opened and closed by the caller.
+
+    This function will safely align blocks, such that intermediate reads will
+    wait until one full block of data is ready, rather than padding partial
+    blocks. Only the final block, if it does not evenly divide the block size,
+    and the underlying cipher mode and algorithm imply block-operation, will be
+    padded to fit.
+
+    Inputs:
+    Cipher  -   Pointer to the Cipher object to use.
+    fd_In   -   File descriptor to read raw data from, using read().
+    fd_Out  -   File descriptor to write resultant data to, using write().
+
+    Outputs:
+    ssize_t -   Returns -1 on errors, or the number of bytes successfully transferred.
+
+*/
+ssize_t Cipher_Encrypt_Stream(Cipher_t* Cipher, int fd_In, int fd_Out);
+
+/*
     Cipher_Decrypt
 
     This function will use the Cipher_t to decrypt the given Ciphertext, which is 'Length' bytes
-   long, writing the decrypted output to the value pointed to by Plaintext. This uses the algorithm
+    long, writing the decrypted output to the value pointed to by Plaintext. This uses the algorithm
     specified when the Cipher_t was prepared, as well as using the specified Mode.
 
     Inputs:
@@ -213,6 +241,32 @@ int Cipher_Encrypt(Cipher_t *Cipher, const void *Plaintext, size_t Length, uint8
 */
 int Cipher_Decrypt(Cipher_t *Cipher, const void *Ciphertext, size_t Length, uint8_t *Plaintext);
 
+/*
+    Cipher_Decrypt_Stream
+
+    This fucnction will use the Cipher_t to Decrypt the given stream,
+    represented by the file descriptor fd_In, writing the resulting
+    output to the file descriptor fd_Out. These may be any file descriptors
+    capable of being operated on by the standard read() and write() calls.
+    These file descriptors are not owned by this function, and must be
+    opened and closed by the caller.
+
+    This function will safely align blocks, such that intermediate reads will
+    wait until one full block of data is ready, rather than padding partial
+    blocks. Only the final block, if it does not evenly divide the block size,
+    and the underlying cipher mode and algorithm imply block-operation, will be
+    padded to fit.
+
+    Inputs:
+    Cipher  -   Pointer to the Cipher object to use.
+    fd_In   -   File descriptor to read raw data from, using read().
+    fd_Out  -   File descriptor to write resultant data to, using write().
+
+    Outputs:
+    ssize_t -   Returns -1 on errors, or the number of bytes successfully transferred.
+    
+*/
+ssize_t Cipher_Decrypt_Stream(Cipher_t* Cipher, int fd_In, int fd_Out);
 /*
     Cipher_Release
 
@@ -231,7 +285,6 @@ void Cipher_Release(Cipher_t *Cipher);
 #if defined(TESTING) || defined(DEBUGGER)
 
 int Test_Libcrypto(void);
-
 
 #endif
 

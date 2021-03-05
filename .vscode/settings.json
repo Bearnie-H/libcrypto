@@ -14,6 +14,7 @@
         "libcrypto.h": "c",
         "chacha_context.h": "c",
         "chacha_constants.h": "c",
-        "chacha_round.h": "c"
+        "chacha_round.h": "c",
+        "stdio.h": "c"
     }
 }
