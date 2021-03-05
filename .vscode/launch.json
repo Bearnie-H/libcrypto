@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "clang - Build and debug active file",
+            "name": "clang - Build and debug project",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/products/debugger/libcrypto-debugger.out",
@@ -15,7 +15,7 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb",
-            "preLaunchTask": "C/C++: clang build active file"
+            "preLaunchTask": "C/C++: clang build project"
         }
     ]
 }

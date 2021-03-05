@@ -5,9 +5,9 @@
 extern "C" {
 #endif
 
-#include "../src/cipher/include/cipher.h"
 #include "../src/AES/include/AES.h"
 #include "../src/ChaCha/include/ChaCha.h"
+#include "../src/cipher/include/cipher.h"
 
 int Test_Libcrypto(void);
 

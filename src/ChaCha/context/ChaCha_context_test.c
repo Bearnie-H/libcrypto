@@ -19,13 +19,15 @@ int Test_ChaCha_Context_Prepare(void) {
 
     uint32_t Counter = 1;
 
-    ChaCha_Context_t* Context = ChaCha_Context_Prepare(ChaCha_Test_Key_256, ChaCha_Test_Nonce, &(Counter));
-    if ( NULL == Context ) {
+    ChaCha_Context_t *Context =
+        ChaCha_Context_Prepare(ChaCha_Test_Key_256, ChaCha_Test_Nonce, &(Counter));
+    if (NULL == Context) {
         printf("Test_ChaCha_Context_Prepare() Failure: Failed to create ChaCha_Context_t!\n");
         return 1;
     }
-    
-    if (( NULL == Context->Key ) || ( NULL == Context->Nonce ) || ( NULL == Context->E_Counter ) || ( NULL == Context->D_Counter ) || ( NULL == Context->State ) || ( NULL == Context->Keystream )) {
+
+    if ((NULL == Context->Key) || (NULL == Context->Nonce) || (NULL == Context->E_Counter) ||
+        (NULL == Context->D_Counter) || (NULL == Context->State) || (NULL == Context->Keystream)) {
         printf("Test_ChaCha_Context_Prepare() Failure: NULL pointer within initialized context!\n");
         return 1;
     }
@@ -35,4 +37,3 @@ int Test_ChaCha_Context_Prepare(void) {
 }
 
 #endif
-

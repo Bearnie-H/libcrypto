@@ -2,8 +2,8 @@
 
 #include "include/AES_round.h"
 
-void AES_Round(uint8_t* State, const uint32_t* RoundKey, AES_Block_Length_t BlockLength) {
-    
+void AES_Round(uint8_t *State, const uint32_t *RoundKey, AES_Block_Length_t BlockLength) {
+
     AES_SubBytes(State, BlockLength);
     AES_ShiftRows(State, BlockLength);
     AES_MixColumns(State, BlockLength);
@@ -12,7 +12,7 @@ void AES_Round(uint8_t* State, const uint32_t* RoundKey, AES_Block_Length_t Bloc
     return;
 }
 
-void AES_SubBytes(uint8_t* State, AES_Block_Length_t BlockLength) {
+void AES_SubBytes(uint8_t *State, AES_Block_Length_t BlockLength) {
 
     size_t ByteIndex;
     size_t WordIndex;
@@ -28,7 +28,7 @@ void AES_SubBytes(uint8_t* State, AES_Block_Length_t BlockLength) {
     return;
 }
 
-void AES_ShiftRows(uint8_t* State, AES_Block_Length_t BlockLength) {
+void AES_ShiftRows(uint8_t *State, AES_Block_Length_t BlockLength) {
 
     int RowIndex;
 
@@ -54,7 +54,7 @@ void AES_ShiftRows(uint8_t* State, AES_Block_Length_t BlockLength) {
     return;
 }
 
-void AES_MixColumns(uint8_t* State, AES_Block_Length_t BlockLength) {
+void AES_MixColumns(uint8_t *State, AES_Block_Length_t BlockLength) {
 
     size_t ColumnIndex, RowIndex;
     uint8_t TempColumn[sizeof(uint32_t)] = {0};

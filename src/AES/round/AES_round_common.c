@@ -2,11 +2,11 @@
 
 #include "include/AES_round.h"
 
-void AES_AddRoundKey(uint8_t* State, const uint32_t* RoundKey, AES_Block_Length_t BlockLength) {
+void AES_AddRoundKey(uint8_t *State, const uint32_t *RoundKey, AES_Block_Length_t BlockLength) {
 
     size_t WordIndex;
     size_t ByteIndex;
-    const uint8_t* RoundKeyBytes = (const uint8_t*)RoundKey;
+    const uint8_t *RoundKeyBytes = (const uint8_t *)RoundKey;
 
     for (WordIndex = 0; WordIndex < (size_t)BlockLength; WordIndex++) {
         for (ByteIndex = 0; ByteIndex < sizeof(uint32_t); ByteIndex++) {
@@ -43,7 +43,9 @@ void AES_ShiftRow(uint8_t *State, AES_Block_Length_t BlockLength, int RowIndex, 
     for (ByteIndex = StartIndex; ByteIndex != FinalSwapIndex; ByteIndex += StepSize) {
 
         SwapIndexA = ((int)sizeof(uint32_t) * ByteIndex) + RowIndex;
-        SwapIndexB = (((ByteIndex - ShiftSize + (int)BlockLength) % (int)BlockLength) * (int)sizeof(uint32_t)) + RowIndex;
+        SwapIndexB = (((ByteIndex - ShiftSize + (int)BlockLength) % (int)BlockLength) *
+                      (int)sizeof(uint32_t)) +
+                     RowIndex;
         AES_Swap_Bytes((uint8_t *)&(State[SwapIndexA]), (uint8_t *)&(State[SwapIndexB]));
     }
 

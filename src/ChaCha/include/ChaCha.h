@@ -8,14 +8,14 @@ extern "C" {
 #include <stdint.h>
 #include <sys/types.h>
 
-#include "ChaCha_constants.h"
 #include "../context/include/ChaCha_context.h"
+#include "ChaCha_constants.h"
 
-int ChaCha_Encrypt_Block(ChaCha_Context_t* Context, const void* In, ssize_t Length, uint8_t* Out);
-int ChaCha_Decrypt_Block(ChaCha_Context_t* Context, const void* In, ssize_t Length, uint8_t* Out);
+int ChaCha_Encrypt_Block(ChaCha_Context_t *Context, const void *In, ssize_t Length, uint8_t *Out);
+int ChaCha_Decrypt_Block(ChaCha_Context_t *Context, const void *In, ssize_t Length, uint8_t *Out);
 
-void ChaCha_Build_State(ChaCha_Context_t* Context, uint32_t* Counter, uint32_t* State);
-void ChaCha_Next_Block(ChaCha_Context_t* Context, uint32_t* Counter);
+void ChaCha_Build_State(ChaCha_Context_t *Context, uint32_t *Counter, uint32_t *State);
+void ChaCha_Next_Block(ChaCha_Context_t *Context, uint32_t *Counter);
 
 #if defined(TESTING) || defined(DEBUGGER)
 

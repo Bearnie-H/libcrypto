@@ -20,10 +20,6 @@ int Test_Cipher_AES_OFB(void);
 int Test_Cipher_AES_CTR(void);
 int Test_Cipher_ChaCha(void);
 
-
-
-
-
 #ifdef __cplusplus
 }
 #endif

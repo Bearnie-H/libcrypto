@@ -6,7 +6,7 @@ WARNINGS        := -Wall -Werror -Wpedantic -Wextra
 WARNINGS_IGNORE :=
 CPPFLAGS        := -ansi $(WARNINGS) $(WARNINGS_IGNORE)
 LIBTOOL         := ar -rcs
-FMTTOOL         := clang-format
+FMTTOOL         :=$(which clang-format)
 
 #   Define the flags for the various different end-result build targets
 RELFLAGS  := $(CPPFLAGS) -O2 -DNDEBUG

@@ -8,7 +8,7 @@ extern "C" {
 #include <stdint.h>
 #include <sys/types.h>
 
-#include "../../include/AES.h"
+#include "../../include/AES_constants.h"
 
 /*
     AES_Context_t
@@ -26,18 +26,18 @@ typedef struct AES_Context_t {
         and is reset to 0's after each encryption
         or decryption operation.
     */
-    uint8_t* State;
+    uint8_t *State;
 
     /*
         Expanded Key schedule to use.
     */
-    uint32_t* RoundKeys;
+    uint32_t *RoundKeys;
 
     /*  Number of 32-bit words in the key schedule */
     size_t RoundKeyLength;
 
     /*
-        The number of 32-bit words in the block. By definition, 
+        The number of 32-bit words in the block. By definition,
         AES requires this to be 4. This is parameterized in the
         rare case this ever changes.
     */
@@ -47,7 +47,6 @@ typedef struct AES_Context_t {
         The number of 32-bit words in the raw key
     */
     AES_Key_Length_t KeyWords;
-    
 
     /*
         How many AES Rounds should be performed
@@ -72,7 +71,8 @@ typedef struct AES_Context_t {
     AES_Context_t*  -   Pointer to a ready-to-use AES_Context_t*, or NULL on error.
 
 */
-AES_Context_t* AES_Context_Prepare(AES_Block_Length_t BlockLength, AES_Key_Length_t KeyLength, const void* Key);
+AES_Context_t *
+AES_Context_Prepare(AES_Block_Length_t BlockLength, AES_Key_Length_t KeyLength, const void *Key);
 
 /*
     AES_KeyExpansion
@@ -90,7 +90,10 @@ AES_Context_t* AES_Context_Prepare(AES_Block_Length_t BlockLength, AES_Key_Lengt
     int -   Returns 0 on success, nonzero on failure or error.
 
 */
-int AES_KeyExpansion(const void* Key, size_t KeyWords, uint32_t* KeySchedule, size_t KeyScheduleLength);
+int AES_KeyExpansion(const void *Key,
+                     size_t KeyWords,
+                     uint32_t *KeySchedule,
+                     size_t KeyScheduleLength);
 
 /*
     AES_BlockLength
@@ -105,7 +108,7 @@ int AES_KeyExpansion(const void* Key, size_t KeyWords, uint32_t* KeySchedule, si
     size_t  -   The size of the block used by this cipher, measured in 8-bit bytes.
 
 */
-size_t AES_BlockLength(AES_Context_t* Ctx);
+size_t AES_BlockLength(AES_Context_t *Ctx);
 
 /*
     AES_Context_Release
@@ -120,7 +123,7 @@ size_t AES_BlockLength(AES_Context_t* Ctx);
     None, the given Context is freed and can no longer be used.
 
 */
-void AES_Context_Release(AES_Context_t* Ctx);
+void AES_Context_Release(AES_Context_t *Ctx);
 
 /*
     SubWord

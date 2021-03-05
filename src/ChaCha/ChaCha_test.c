@@ -3,8 +3,8 @@
 
 #if defined(TESTING) || defined(DEBUGGER)
 
-#include "include/ChaCha.h"
 #include "context/include/ChaCha_context.h"
+#include "include/ChaCha.h"
 #include "round/include/ChaCha_round.h"
 
 int Test_ChaCha(void) {

@@ -12,12 +12,12 @@ extern "C" {
 #define CHACHA_COUNTER_LENGTH 1
 
 typedef enum ChaCha_Block_Length_t {
-    ChaCha_Block_512 = (( 512 / __CHAR_BIT__ ) / sizeof(uint32_t))
+    ChaCha_Block_512 = ((512 / __CHAR_BIT__) / sizeof(uint32_t))
 
 } ChaCha_Block_Length_t;
 
 typedef enum ChaCha_Key_Length_t {
-    ChaCha_Key_256 = ((256  / __CHAR_BIT__ ) / sizeof(uint32_t))
+    ChaCha_Key_256 = ((256 / __CHAR_BIT__) / sizeof(uint32_t))
 
 } ChaCha_Key_Length_t;
 

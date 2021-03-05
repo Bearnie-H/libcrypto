@@ -105,9 +105,9 @@ typedef enum Cipher_Algo_t {
     */
     ALGO_NONE,
 
-    AES_128,    /* AES with a 128-bit Key. IV interpreted based on Cipher_Mode_t. */
-    AES_192,    /* AES with a 192-bit Key. IV interpreted based on Cipher_Mode_t. */
-    AES_256,    /* AES with a 256-bit Key. IV interpreted based on Cipher_Mode_t. */
+    AES_128, /* AES with a 128-bit Key. IV interpreted based on Cipher_Mode_t. */
+    AES_192, /* AES with a 192-bit Key. IV interpreted based on Cipher_Mode_t. */
+    AES_256, /* AES with a 256-bit Key. IV interpreted based on Cipher_Mode_t. */
 
     /*
         ChaCha with 20 rounds.
@@ -125,7 +125,6 @@ typedef enum Cipher_Algo_t {
 /*
     Public Interface Functions
 */
-
 
 /*
     Cipher_Prepare
@@ -151,7 +150,8 @@ typedef enum Cipher_Algo_t {
                     Cipher_t object to be used with the Cipher_Encrypt() or
                     Cipher_Decrypt() functions.
 */
-Cipher_t* Cipher_Prepare(Cipher_Algo_t Algorithm, Cipher_Mode_t Mode, const void* Key, const void* IV);
+Cipher_t *
+Cipher_Prepare(Cipher_Algo_t Algorithm, Cipher_Mode_t Mode, const void *Key, const void *IV);
 
 /*
     Cipher_Update_IV
@@ -169,13 +169,13 @@ Cipher_t* Cipher_Prepare(Cipher_Algo_t Algorithm, Cipher_Mode_t Mode, const void
     Outputs:
     int -   Returns 0 on success, nonzero on failure or error.
 */
-int Cipher_Update_IV(Cipher_t* Cipher, const void* IV);
+int Cipher_Update_IV(Cipher_t *Cipher, const void *IV);
 
 /*
     Cipher_Encrypt
 
-    This function will use the Cipher_t to encrypt the given Plaintext, which is 'Length' bytes long,
-    writing the encrypted output to the value pointed to by Ciphertext. This uses the algorithm
+    This function will use the Cipher_t to encrypt the given Plaintext, which is 'Length' bytes
+   long, writing the encrypted output to the value pointed to by Ciphertext. This uses the algorithm
     specified when the Cipher_t was prepared, as well as using the specified Mode.
 
     Inputs:
@@ -190,13 +190,13 @@ int Cipher_Update_IV(Cipher_t* Cipher, const void* IV);
     int         -   Returns 0 on success, nonzero on failure or error.
 
 */
-int Cipher_Encrypt(Cipher_t* Cipher, const void* Plaintext, size_t Length, uint8_t* Ciphertext);
+int Cipher_Encrypt(Cipher_t *Cipher, const void *Plaintext, size_t Length, uint8_t *Ciphertext);
 
 /*
     Cipher_Decrypt
 
-    This function will use the Cipher_t to decrypt the given Ciphertext, which is 'Length' bytes long,
-    writing the decrypted output to the value pointed to by Plaintext. This uses the algorithm
+    This function will use the Cipher_t to decrypt the given Ciphertext, which is 'Length' bytes
+   long, writing the decrypted output to the value pointed to by Plaintext. This uses the algorithm
     specified when the Cipher_t was prepared, as well as using the specified Mode.
 
     Inputs:
@@ -211,7 +211,7 @@ int Cipher_Encrypt(Cipher_t* Cipher, const void* Plaintext, size_t Length, uint8
     int         -   Returns 0 on success, nonzero on failure or error.
 
 */
-int Cipher_Decrypt(Cipher_t* Cipher, const void* Ciphertext, size_t Length, uint8_t* Plaintext);
+int Cipher_Decrypt(Cipher_t *Cipher, const void *Ciphertext, size_t Length, uint8_t *Plaintext);
 
 /*
     Cipher_Release
@@ -221,12 +221,12 @@ int Cipher_Decrypt(Cipher_t* Cipher, const void* Ciphertext, size_t Length, uint
 
     Inputs:
     Cipher  -   Pointer to a previously prepared Cipher_t object.
-    
+
     Outputs:
     void    -   The Cipher_t and all held resources are safely released.
 
 */
-void Cipher_Release(Cipher_t* Cipher);
+void Cipher_Release(Cipher_t *Cipher);
 
 #if defined(TESTING) || defined(DEBUGGER)
 

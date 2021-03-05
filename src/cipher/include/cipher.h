@@ -8,10 +8,10 @@ extern "C" {
 #include "../../../include/libcrypto.h"
 #include "../../AES/include/AES.h"
 
-typedef int(*EncryptFunc)(void*, const void*, size_t, uint8_t*);
-typedef int(*DecryptFunc)(void*, const void*, size_t, uint8_t*);
+typedef int (*EncryptFunc)(void *, const void *, size_t, uint8_t *);
+typedef int (*DecryptFunc)(void *, const void *, size_t, uint8_t *);
 
-typedef void(*CounterIncFunc)(void*);
+typedef void (*CounterIncFunc)(void *);
 
 /*
     Cipher_t
@@ -28,30 +28,30 @@ struct Cipher_t {
         structure containing helpful additional fields and constants
         for the actual encryption itself.
     */
-    void* Context;
+    void *Context;
 
     /*
         This contains the function pointer to the function which can
         safely release the resources held by the given Context object.
     */
-    void (*FreeContext)(void* Context);
+    void (*FreeContext)(void *Context);
 
     /*
         Query the held context, returning the size of the block in bytes.
     */
-    size_t (*BlockLength)(void* Context);
+    size_t (*BlockLength)(void *Context);
 
     /*
         Encryption and Decryption function pointers.
 
         These abstract out the specific algorithm behind
         a consistent interface. These take, in order:
-        
+
             *_Context_t*    - Algorithm-specific context.
             void*           - Input bytes
             size_t          - Input length
             uint8_t*        - Output location
-        
+
         These are initialized during Cipher_Prepare(),
         and will be called upon as the cipher-level primitives
         for encrypting a given block.
@@ -71,15 +71,15 @@ struct Cipher_t {
         mode, or when using a Cipher Algorithm which only runs in a Counter-type mode.
     */
     CounterIncFunc IncrementCounter;
-    uint8_t* E_IV;
-    uint8_t* D_IV;
+    uint8_t *E_IV;
+    uint8_t *D_IV;
     size_t IV_Length;
 
     /*
         SpareBlock is a block of memory equal in size to one block of the underlying
         cipher, used as working space during multi-block operations.
     */
-    uint8_t* SpareBlock;
+    uint8_t *SpareBlock;
 };
 
 /*
@@ -90,12 +90,16 @@ struct Cipher_t {
     features.
 */
 
-Cipher_t* Cipher_Prepare_AES(Cipher_t* Cipher, AES_Key_Length_t KeyLength, Cipher_Mode_t Mode, const void* Key, const void* IV);
+Cipher_t *Cipher_Prepare_AES(Cipher_t *Cipher,
+                             AES_Key_Length_t KeyLength,
+                             Cipher_Mode_t Mode,
+                             const void *Key,
+                             const void *IV);
 
-Cipher_t* Cipher_Prepare_ChaCha(Cipher_t* Cipher, const void* Key, const void* IV);
+Cipher_t *Cipher_Prepare_ChaCha(Cipher_t *Cipher, const void *Key, const void *IV);
 
-int Cipher_Update_IV_AES(Cipher_t* Cipher, const void* IV);
-int Cipher_Update_IV_ChaCha(Cipher_t* Cipher, const void* IV);
+int Cipher_Update_IV_AES(Cipher_t *Cipher, const void *IV);
+int Cipher_Update_IV_ChaCha(Cipher_t *Cipher, const void *IV);
 
 /*
     Mode-of-operation specific function defintions.
@@ -103,32 +107,66 @@ int Cipher_Update_IV_ChaCha(Cipher_t* Cipher, const void* IV);
     The public library function that's exposed simply checks arguments and then dispatches to
     one of these functions.
 */
-int Cipher_Encrypt_AES_ECB(Cipher_t* Cipher, const void* Plaintext, size_t Length, uint8_t* Ciphertext);
-int Cipher_Encrypt_AES_CBC(Cipher_t* Cipher, const void* Plaintext, size_t Length, uint8_t* Ciphertext);
-int Cipher_Encrypt_AES_CFB(Cipher_t* Cipher, const void* Plaintext, size_t Length, uint8_t* Ciphertext);
-int Cipher_Encrypt_AES_OFB(Cipher_t* Cipher, const void* Plaintext, size_t Length, uint8_t* Ciphertext);
-int Cipher_Encrypt_AES_CTR(Cipher_t* Cipher, const void* Plaintext, size_t Length, uint8_t* Ciphertext);
-int Cipher_Encrypt_ChaCha(Cipher_t* Cipher, const void* Plaintext, size_t Length, uint8_t* Ciphertext);
+int Cipher_Encrypt_AES_ECB(Cipher_t *Cipher,
+                           const void *Plaintext,
+                           size_t Length,
+                           uint8_t *Ciphertext);
+int Cipher_Encrypt_AES_CBC(Cipher_t *Cipher,
+                           const void *Plaintext,
+                           size_t Length,
+                           uint8_t *Ciphertext);
+int Cipher_Encrypt_AES_CFB(Cipher_t *Cipher,
+                           const void *Plaintext,
+                           size_t Length,
+                           uint8_t *Ciphertext);
+int Cipher_Encrypt_AES_OFB(Cipher_t *Cipher,
+                           const void *Plaintext,
+                           size_t Length,
+                           uint8_t *Ciphertext);
+int Cipher_Encrypt_AES_CTR(Cipher_t *Cipher,
+                           const void *Plaintext,
+                           size_t Length,
+                           uint8_t *Ciphertext);
+int Cipher_Encrypt_ChaCha(Cipher_t *Cipher,
+                          const void *Plaintext,
+                          size_t Length,
+                          uint8_t *Ciphertext);
 
-int Cipher_Decrypt_AES_ECB(Cipher_t* Cipher, const void* Ciphertext, size_t Length, uint8_t* Plaintext);
-int Cipher_Decrypt_AES_CBC(Cipher_t* Cipher, const void* Ciphertext, size_t Length, uint8_t* Plaintext);
-int Cipher_Decrypt_AES_CFB(Cipher_t* Cipher, const void* Ciphertext, size_t Length, uint8_t* Plaintext);
-int Cipher_Decrypt_AES_OFB(Cipher_t* Cipher, const void* Ciphertext, size_t Length, uint8_t* Plaintext);
-int Cipher_Decrypt_AES_CTR(Cipher_t* Cipher, const void* Ciphertext, size_t Length, uint8_t* Plaintext);
-int Cipher_Decrypt_ChaCha(Cipher_t* Cipher, const void* Ciphertext, size_t Length, uint8_t* Plaintext);
+int Cipher_Decrypt_AES_ECB(Cipher_t *Cipher,
+                           const void *Ciphertext,
+                           size_t Length,
+                           uint8_t *Plaintext);
+int Cipher_Decrypt_AES_CBC(Cipher_t *Cipher,
+                           const void *Ciphertext,
+                           size_t Length,
+                           uint8_t *Plaintext);
+int Cipher_Decrypt_AES_CFB(Cipher_t *Cipher,
+                           const void *Ciphertext,
+                           size_t Length,
+                           uint8_t *Plaintext);
+int Cipher_Decrypt_AES_OFB(Cipher_t *Cipher,
+                           const void *Ciphertext,
+                           size_t Length,
+                           uint8_t *Plaintext);
+int Cipher_Decrypt_AES_CTR(Cipher_t *Cipher,
+                           const void *Ciphertext,
+                           size_t Length,
+                           uint8_t *Plaintext);
+int Cipher_Decrypt_ChaCha(Cipher_t *Cipher,
+                          const void *Ciphertext,
+                          size_t Length,
+                          uint8_t *Plaintext);
 
 /*
     Minor helper functions below
 */
-void* GenerateRandomVector(size_t Length);
+void *GenerateRandomVector(size_t Length);
 
 /*
     This will compute A = A ^ B where A and B are both
     'Length' bytes long.
 */
-void BlockXOR(uint8_t* A, const uint8_t* B, size_t Length);
-
-
+void BlockXOR(uint8_t *A, const uint8_t *B, size_t Length);
 
 #if defined(TESTING) || defined(DEBUGGER)
 

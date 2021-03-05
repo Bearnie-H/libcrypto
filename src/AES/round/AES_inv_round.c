@@ -2,7 +2,7 @@
 
 #include "include/AES_round.h"
 
-void AES_InvRound(uint8_t* State, const uint32_t* RoundKey, AES_Block_Length_t BlockLength) {
+void AES_InvRound(uint8_t *State, const uint32_t *RoundKey, AES_Block_Length_t BlockLength) {
 
     AES_InvShiftRows(State, BlockLength);
     AES_InvSubBytes(State, BlockLength);
@@ -12,7 +12,7 @@ void AES_InvRound(uint8_t* State, const uint32_t* RoundKey, AES_Block_Length_t B
     return;
 }
 
-void AES_InvSubBytes(uint8_t* State, AES_Block_Length_t BlockLength) {
+void AES_InvSubBytes(uint8_t *State, AES_Block_Length_t BlockLength) {
 
     size_t ByteIndex;
     size_t WordIndex;
@@ -28,7 +28,7 @@ void AES_InvSubBytes(uint8_t* State, AES_Block_Length_t BlockLength) {
     return;
 }
 
-void AES_InvShiftRows(uint8_t* State, AES_Block_Length_t BlockLength) {
+void AES_InvShiftRows(uint8_t *State, AES_Block_Length_t BlockLength) {
 
     int RowIndex;
 
@@ -54,7 +54,7 @@ void AES_InvShiftRows(uint8_t* State, AES_Block_Length_t BlockLength) {
     return;
 }
 
-void AES_InvMixColumns(uint8_t* State, AES_Block_Length_t BlockLength) {
+void AES_InvMixColumns(uint8_t *State, AES_Block_Length_t BlockLength) {
 
     size_t ColumnIndex, RowIndex;
     uint8_t TempColumn[sizeof(uint32_t)] = {0};

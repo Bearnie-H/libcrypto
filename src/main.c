@@ -12,10 +12,11 @@ int Test_Libcrypto(void) {
     FailedTests += Test_ChaCha();
     FailedTests += Test_Cipher();
 
-    if ( 0 == FailedTests ) {
+    if (0 == FailedTests) {
         printf("Libcrypto: Successfully passed all internal self-tests!\n");
     } else {
-        printf("Libcrypto: Internal self-tests failed. Review error messages and correct these immediately!\n");
+        printf("Libcrypto: Internal self-tests failed. Review error messages and correct these "
+               "immediately!\n");
     }
 
     return FailedTests;
@@ -23,12 +24,12 @@ int Test_Libcrypto(void) {
 
 #endif
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
 
     int i;
 
     printf("Executing: %s", argv[0]);
-    for ( i = 1; i < argc; i++ ) {
+    for (i = 1; i < argc; i++) {
         printf(" %s", argv[i]);
     }
     printf("\n");

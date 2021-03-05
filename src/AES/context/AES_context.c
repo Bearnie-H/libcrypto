@@ -3,48 +3,50 @@
 
 #include "../include/AES.h"
 
-AES_Context_t* AES_Context_Prepare(AES_Block_Length_t BlockLength, AES_Key_Length_t KeyLength, const void* Key) {
+AES_Context_t *
+AES_Context_Prepare(AES_Block_Length_t BlockLength, AES_Key_Length_t KeyLength, const void *Key) {
 
-    AES_Context_t* Context = NULL;
+    AES_Context_t *Context = NULL;
 
-    if ( NULL == Key ) {
+    if (NULL == Key) {
         return NULL;
     }
 
-    Context = (AES_Context_t*)calloc(1, sizeof(AES_Context_t));
-    if ( NULL == Context ){
+    Context = (AES_Context_t *)calloc(1, sizeof(AES_Context_t));
+    if (NULL == Context) {
         return NULL;
     }
 
     Context->BlockLength = BlockLength;
     Context->KeyWords = KeyLength;
 
-    switch ( Context->KeyWords ) {
-        case AES_Key_128:
-            Context->NumRounds = AES_Round_10;
-            break;
-        case AES_Key_192:
-            Context->NumRounds = AES_Round_12;
-            break;
-        case AES_Key_256:
-            Context->NumRounds = AES_Round_14;
-            break;
+    switch (Context->KeyWords) {
+    case AES_Key_128:
+        Context->NumRounds = AES_Round_10;
+        break;
+    case AES_Key_192:
+        Context->NumRounds = AES_Round_12;
+        break;
+    case AES_Key_256:
+        Context->NumRounds = AES_Round_14;
+        break;
     }
 
     Context->RoundKeyLength = (size_t)(Context->BlockLength * (Context->NumRounds + 1));
-    Context->RoundKeys = (uint32_t*)calloc(Context->RoundKeyLength, sizeof(uint32_t));
-    if ( NULL == Context->RoundKeys ) {
+    Context->RoundKeys = (uint32_t *)calloc(Context->RoundKeyLength, sizeof(uint32_t));
+    if (NULL == Context->RoundKeys) {
         AES_Context_Release(Context);
         return NULL;
     }
 
-    if ( 0 != AES_KeyExpansion(Key, Context->KeyWords, Context->RoundKeys, Context->RoundKeyLength) ) {
+    if (0 !=
+        AES_KeyExpansion(Key, Context->KeyWords, Context->RoundKeys, Context->RoundKeyLength)) {
         AES_Context_Release(Context);
         return NULL;
     }
 
-    Context->State = (uint8_t*)calloc(Context->BlockLength, sizeof(uint32_t));
-    if ( NULL == Context->State ) {
+    Context->State = (uint8_t *)calloc(Context->BlockLength, sizeof(uint32_t));
+    if (NULL == Context->State) {
         AES_Context_Release(Context);
         return NULL;
     }
@@ -52,16 +54,19 @@ AES_Context_t* AES_Context_Prepare(AES_Block_Length_t BlockLength, AES_Key_Lengt
     return Context;
 }
 
-int AES_KeyExpansion(const void* Key, size_t KeyWords, uint32_t* KeySchedule, size_t KeyScheduleLength) {
+int AES_KeyExpansion(const void *Key,
+                     size_t KeyWords,
+                     uint32_t *KeySchedule,
+                     size_t KeyScheduleLength) {
 
     size_t WordIndex = 0;
     uint32_t Temp = 0;
 
-    for ( WordIndex = 0; WordIndex < KeyWords; WordIndex++ ) {
-        (KeySchedule)[WordIndex] = ((const uint32_t*)Key)[WordIndex];
+    for (WordIndex = 0; WordIndex < KeyWords; WordIndex++) {
+        (KeySchedule)[WordIndex] = ((const uint32_t *)Key)[WordIndex];
     }
 
-    for ( WordIndex = KeyWords; WordIndex < KeyScheduleLength; WordIndex++ ) {
+    for (WordIndex = KeyWords; WordIndex < KeyScheduleLength; WordIndex++) {
         Temp = (KeySchedule)[WordIndex - 1];
 
         if (0 == (WordIndex % KeyWords)) {
@@ -77,28 +82,28 @@ int AES_KeyExpansion(const void* Key, size_t KeyWords, uint32_t* KeySchedule, si
     return 0;
 }
 
-size_t AES_BlockLength(AES_Context_t* Ctx) {
+size_t AES_BlockLength(AES_Context_t *Ctx) {
 
-    if ( NULL == Ctx ) {
+    if (NULL == Ctx) {
         return 0;
     }
 
     return (size_t)Ctx->BlockLength * sizeof(uint32_t);
 }
 
-void AES_Context_Release(AES_Context_t* Ctx) {
+void AES_Context_Release(AES_Context_t *Ctx) {
 
-    if ( NULL == Ctx ) {
+    if (NULL == Ctx) {
         return;
     }
 
-    if ( NULL != Ctx->State ) {
+    if (NULL != Ctx->State) {
         memset(Ctx->State, 0x00, Ctx->BlockLength * sizeof(uint32_t));
         free(Ctx->State);
         Ctx->State = NULL;
     }
 
-    if ( NULL != Ctx->RoundKeys ) {
+    if (NULL != Ctx->RoundKeys) {
         memset(Ctx->RoundKeys, 0x00, Ctx->RoundKeyLength * sizeof(uint32_t));
         free(Ctx->RoundKeys);
         Ctx->RoundKeys = NULL;

@@ -2,8 +2,8 @@
 
 #if defined(TESTING) || defined(DEBUGGER)
 
-#include "include/AES.h"
 #include "context/include/AES_context.h"
+#include "include/AES.h"
 #include "round/include/AES_round.h"
 
 int Test_AES(void) {
