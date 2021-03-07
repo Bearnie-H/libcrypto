@@ -1,13 +1,19 @@
+
 SRCS := $(wildcard *.c)
 DEPS := $(patsubst %.c,%.d,$(SRCS))
 
-RELOBJS = $(patsubst %.c,$(RELBUILDDIR)/%.o,$(SRCS))
-DBGOBJS = $(patsubst %.c,$(DBGBUILDDIR)/%.o,$(SRCS))
+
+#   Filter out any files of the form: *_test.c from the
+#   release and debug targets. No point in compiling files that are intended to
+#   be excluded from useable output builds.
+
+RELOBJS = $(patsubst %.c,$(RELBUILDDIR)/%.o,$(filter-out %test.c, $(SRCS)))
+DBGOBJS = $(patsubst %.c,$(DBGBUILDDIR)/%.o,$(filter-out %test.c, $(SRCS)))
 DBGROBJS = $(patsubst %.c,$(DBGRBUILDDIR)/%.o,$(SRCS))
 TESTOBJS = $(patsubst %.c,$(TESTBUILDDIR)/%.o,$(SRCS))
 
-RELDEPS = $(addprefix $(RELBUILDDIR)/,$(DEPS))
-DBGDEPS = $(addprefix $(DBGBUILDDIR)/,$(DEPS))
+RELDEPS = $(addprefix $(RELBUILDDIR)/,$(filter-out %test.d, $(DEPS)))
+DBGDEPS = $(addprefix $(DBGBUILDDIR)/,$(filter-out %test.d, $(DEPS)))
 DBGRDEPS = $(addprefix $(DBGRBUILDDIR)/,$(DEPS))
 TESTDEPS = $(addprefix $(TESTBUILDDIR)/,$(DEPS))
 
@@ -25,7 +31,8 @@ prep:
 clean-hard: clean
 
 clean:
-	$(RM) $(RELOBJS) $(DBGOBJS) $(DBGROBJS) $(TESTOBJS) $(RELDEPS) $(DBGDEPS) $(DBGRDEPS) $(TESTDEPS)
+	$(RM) $(RELOBJS) $(DBGOBJS) $(DBGROBJS) $(TESTOBJS)
+	$(RM) $(RELDEPS) $(DBGDEPS) $(DBGRDEPS) $(TESTDEPS)
 
 remake:
 	$(MAKE) clean
