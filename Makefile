@@ -121,6 +121,3 @@ debugger: prep $(TESTCOMPONENTS) $(COMPONENTS)
 release: prep $(COMPONENTS)
 	$(LIBTOOL) $(RELEXE) $(filter-out %test.o, $(RELOBJS))
 	$(STRIP) $(RELEXE)
-
-include Objects.mk
-

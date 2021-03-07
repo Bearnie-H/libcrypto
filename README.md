@@ -6,6 +6,9 @@ as well as the [ChaCha20](https://tools.ietf.org/html/rfc7539) ciphers. This doe
 not include any of the additional message authentication features typically
 bundled with the ciphers.
 
+This library is fully ANSI-C, and has been tested for portability over for both OS X,
+and Linux, as well as ARM and x86. Endianness has not been tested for portability,
+but this was not an important goal for this project.
 # THIS LIBRARY SHOULD NOT BE USED IN PRODUCTION SOFTWARE
 
 Part of the academic exploration of the ciphers this library aims to achieve is
@@ -18,7 +21,11 @@ which are not present in the pure description.
 Timing attacks and other side-channel attacks are almost certainly present
 in this library. The only guarantee is that the ciphers as implemented are
 algorithmically correct for both the block operations, and the multi-block
-mode of operation functionality.
+mode of operation functionality. Addressing these modes of attack typically
+involves reframing the algorithms in terms of pre-computed lookup tables and
+esoteric-looking branchless code. These have the great benefit of removing
+avenues of attack, but at the cost of obfuscating the connection between
+source code and the underlying mathematics.
 
 # AES Implementation
 
@@ -26,19 +33,35 @@ This implementation is
 derived almost exactly from the original NIST specification. Only minor naming changes
 were done to ensure a cleaner namespace within the library.
 
-This implementation successfully covers the three key sizes used in AES, 128-bit,
+This implementation successfully covers the three key sizes used in AES: 128-bit,
 192-bit, and 256-bit. It also successfully implements a number of instructive
 multi-block modes of operation for the AES cipher specifically. The supported modes are
 defined by the `Cipher_Mode_t` type.
 
-...
+The self-testing suite of the library references test vectors from the standards document
+to demonstrate correctness of the internal round functions, as well as one-way encryption
+and decryption. Round-trip correctness is tested and verified by reusing the same `Cipher_t`
+to encrypt and decrypt a message, ensuring the output is bit-identical to the source.
+This round-trip testing is also performed for the various multi-block modes of operation
+to validate their operation.
+
+As allowed by the standards, any remaining keystream bytes from a stream-cipher
+mode will be **DISCARDED** at the end of a transaction. As a result, the concatenation
+of two stream-cipher mode outputs **DOES NOT** guarantee to decrypt correctly,
+except in the case where messages exactly divide into blocks.
 
 # ChaCha20 Implementation
 
 This implementation is derived closely from the RFC specification. Again, minor renaming
 changes were done for namespace collision and internal library symbol management.
 
-
+This algorithm was added to provide both an alternative to AES for cryptographic needs,
+as well as demonstrating the simplicity and implicit removal of a number of side-channels
+for attack when using an ARX (Add-Rotate-XOR) cipher. ChaCha entails a substantially simpler
+implementation, with no necessary branching or decision pathways. It is also fully symmetric
+between encryption and decryption, further simplifying the operation. Finally, it is
+implicitly a stream-cipher operation, and does not require multi-block mode of operation
+beyond what is specified by the default operation.
 
 # Using the Library
 
@@ -46,6 +69,10 @@ This library provides a `Cipher_t` struct, as well as related `Cipher_Algo_t` an
 types as the primary interface. The `Cipher_t` struct provides an opaque interface to
 operate on either pre-allocated buffers (`Cipher_Encrypt()` and `Cipher_Decrypt()`),
 or to operate on *streams* (file descriptors) (`Cipher_Encrypt_Stream()` and `Cipher_Decrypt_Stream()`).
+
+Mixing between the two types of operation (buffer <-> stream) unfortunately necessitates
+splitting up the read/write operations and the encrypt/decrypt operations. This is a possible
+future extension to the library.
 
 A `Cipher_t` must be prepared via the `Cipher_Prepare()` call. Pass in the Algorithm (`Cipher_Algo_t`),
 Mode of Operation (`Cipher_Mode_t`), the Key, and the Nonce to use. The returned `Cipher_t` is
@@ -101,6 +128,25 @@ There is no target to install the library, mostly due to the fact that this shou
 used outside of educational or exploratory purposes. If you do wish to install the
 library, simply add the `release` target to your `$LD_LIBRARY_PATH` and the top-level header
 `libcrypto.h` to your `$INCLUDE_PATH`.
+
+# Possible Extensions
+
+This library is far from *complete*, from the learning perspective. Additional ciphers,
+additional modes of operation, message authentication codes, would all be valuable
+additions to explore. In addition, the interface presented by the library is somewhat
+limiting, in only providing buffer-buffer **OR** stream-stream operations. Extension
+to simplify buffer-stream and vice versa would certainly lead to a more amenable
+interface for exploring related cryptographic areas as TLS, Disk Encryption, or VPN
+operation.
+
+Another major area of improvement or learning is to better encapsulate and understand
+the process of Initialization Vector selection/generation, Key Generation/Exchange, and protocol
+negotiation. The current design essentially implies a separate secure channel for sharing
+this information; not ideal for learning about these topics.
+
+Ideally, the `Cipher_t` as a black-box cipher object continues to serve as the
+primary object of this library, regardless of the underlying algorithm, mode, source,
+or destination of data.
 
 # Examples
 
@@ -186,4 +232,12 @@ int main(int argc, char** argv) {
     Cipher_Release(Cipher);
     return 0;
 }
+```
+
+These examples can be easily compiled and tested by copying the source code here to a 
+file "main.c" in a directory with the libcrpyto.a release library, and the libcrypto.h header file.
+
+Compile the executables with:
+```shell
+gcc -o libcrypto-example.out main.c libcrypto.a
 ```
