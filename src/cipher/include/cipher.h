@@ -113,52 +113,52 @@ int Cipher_Update_IV_ChaCha(Cipher_t *Cipher, const void *IV);
     The public library function that's exposed simply checks arguments and then dispatches to
     one of these functions.
 */
-int Cipher_Encrypt_AES_ECB(Cipher_t *Cipher,
+ssize_t Cipher_Encrypt_AES_ECB(Cipher_t *Cipher,
                            const void *Plaintext,
                            size_t Length,
                            uint8_t *Ciphertext);
-int Cipher_Encrypt_AES_CBC(Cipher_t *Cipher,
+ssize_t Cipher_Encrypt_AES_CBC(Cipher_t *Cipher,
                            const void *Plaintext,
                            size_t Length,
                            uint8_t *Ciphertext);
-int Cipher_Encrypt_AES_CFB(Cipher_t *Cipher,
+ssize_t Cipher_Encrypt_AES_CFB(Cipher_t *Cipher,
                            const void *Plaintext,
                            size_t Length,
                            uint8_t *Ciphertext);
-int Cipher_Encrypt_AES_OFB(Cipher_t *Cipher,
+ssize_t Cipher_Encrypt_AES_OFB(Cipher_t *Cipher,
                            const void *Plaintext,
                            size_t Length,
                            uint8_t *Ciphertext);
-int Cipher_Encrypt_AES_CTR(Cipher_t *Cipher,
+ssize_t Cipher_Encrypt_AES_CTR(Cipher_t *Cipher,
                            const void *Plaintext,
                            size_t Length,
                            uint8_t *Ciphertext);
-int Cipher_Encrypt_ChaCha(Cipher_t *Cipher,
+ssize_t Cipher_Encrypt_ChaCha(Cipher_t *Cipher,
                           const void *Plaintext,
                           size_t Length,
                           uint8_t *Ciphertext);
 
-int Cipher_Decrypt_AES_ECB(Cipher_t *Cipher,
+ssize_t Cipher_Decrypt_AES_ECB(Cipher_t *Cipher,
                            const void *Ciphertext,
                            size_t Length,
                            uint8_t *Plaintext);
-int Cipher_Decrypt_AES_CBC(Cipher_t *Cipher,
+ssize_t Cipher_Decrypt_AES_CBC(Cipher_t *Cipher,
                            const void *Ciphertext,
                            size_t Length,
                            uint8_t *Plaintext);
-int Cipher_Decrypt_AES_CFB(Cipher_t *Cipher,
+ssize_t Cipher_Decrypt_AES_CFB(Cipher_t *Cipher,
                            const void *Ciphertext,
                            size_t Length,
                            uint8_t *Plaintext);
-int Cipher_Decrypt_AES_OFB(Cipher_t *Cipher,
+ssize_t Cipher_Decrypt_AES_OFB(Cipher_t *Cipher,
                            const void *Ciphertext,
                            size_t Length,
                            uint8_t *Plaintext);
-int Cipher_Decrypt_AES_CTR(Cipher_t *Cipher,
+ssize_t Cipher_Decrypt_AES_CTR(Cipher_t *Cipher,
                            const void *Ciphertext,
                            size_t Length,
                            uint8_t *Plaintext);
-int Cipher_Decrypt_ChaCha(Cipher_t *Cipher,
+ssize_t Cipher_Decrypt_ChaCha(Cipher_t *Cipher,
                           const void *Ciphertext,
                           size_t Length,
                           uint8_t *Plaintext);

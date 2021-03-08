@@ -164,7 +164,8 @@ Cipher_t *Cipher_Prepare_ChaCha(Cipher_t *Cipher, const void *Key, const void *I
     return Cipher;
 }
 
-int Cipher_Encrypt(Cipher_t *Cipher, const void *Plaintext, size_t Length, uint8_t *Ciphertext) {
+ssize_t
+Cipher_Encrypt(Cipher_t *Cipher, const void *Plaintext, size_t Length, uint8_t *Ciphertext) {
 
     /* Handle NULL pointers as errors. */
     if ((NULL == Cipher) || (NULL == Plaintext) || (NULL == Ciphertext)) {
@@ -204,7 +205,8 @@ int Cipher_Encrypt(Cipher_t *Cipher, const void *Plaintext, size_t Length, uint8
     return -1;
 }
 
-int Cipher_Decrypt(Cipher_t *Cipher, const void *Ciphertext, size_t Length, uint8_t *Plaintext) {
+ssize_t
+Cipher_Decrypt(Cipher_t *Cipher, const void *Ciphertext, size_t Length, uint8_t *Plaintext) {
 
     /* Handle NULL pointers as errors. */
     if ((NULL == Cipher) || (NULL == Plaintext) || (NULL == Ciphertext)) {

@@ -188,10 +188,10 @@ int Cipher_Update_IV(Cipher_t *Cipher, const void *IV);
                         be large enough to accept the fully encrypted output.
 
     Outputs:
-    int         -   Returns 0 on success, nonzero on failure or error.
+    ssize_t         -   Returns the number of bytes written, or -1 on error
 
 */
-int Cipher_Encrypt(Cipher_t *Cipher, const void *Plaintext, size_t Length, uint8_t *Ciphertext);
+ssize_t Cipher_Encrypt(Cipher_t *Cipher, const void *Plaintext, size_t Length, uint8_t *Ciphertext);
 
 /*
     Cipher_Encrypt_Stream
@@ -236,10 +236,10 @@ ssize_t Cipher_Encrypt_Stream(Cipher_t* Cipher, int fd_In, int fd_Out);
                         be large enough to accept the fully encrypted output.
 
     Outputs:
-    int         -   Returns 0 on success, nonzero on failure or error.
+    ssize_t         -   Returns the number of bytes written, or -1 on error
 
 */
-int Cipher_Decrypt(Cipher_t *Cipher, const void *Ciphertext, size_t Length, uint8_t *Plaintext);
+ssize_t Cipher_Decrypt(Cipher_t *Cipher, const void *Ciphertext, size_t Length, uint8_t *Plaintext);
 
 /*
     Cipher_Decrypt_Stream

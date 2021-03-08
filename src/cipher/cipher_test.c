@@ -79,19 +79,19 @@ int Test_Cipher_AES_ECB(void) {
         return 1;
     }
 
-    if (0 != Cipher_Encrypt(Cipher,
-                            (const void *)&(RoundTripMessage[0]),
-                            sizeof(RoundTripMessage),
-                            (uint8_t *)&(RoundTripMessage[0]))) {
+    if (-1 == Cipher_Encrypt(Cipher,
+                             (const void *)&(RoundTripMessage[0]),
+                             sizeof(RoundTripMessage),
+                             (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_ECB() Failure: Error occured during Cipher_Encrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
     }
 
-    if (0 != Cipher_Decrypt(Cipher,
-                            (const void *)&(RoundTripMessage[0]),
-                            sizeof(RoundTripMessage),
-                            (uint8_t *)&(RoundTripMessage[0]))) {
+    if (-1 == Cipher_Decrypt(Cipher,
+                             (const void *)&(RoundTripMessage[0]),
+                             sizeof(RoundTripMessage),
+                             (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_ECB() Failure: Error occured during Cipher_Decrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
@@ -121,19 +121,19 @@ int Test_Cipher_AES_CBC(void) {
         return 1;
     }
 
-    if (0 != Cipher_Encrypt(Cipher,
-                            (const void *)&(RoundTripMessage[0]),
-                            sizeof(RoundTripMessage),
-                            (uint8_t *)&(RoundTripMessage[0]))) {
+    if (-1 == Cipher_Encrypt(Cipher,
+                             (const void *)&(RoundTripMessage[0]),
+                             sizeof(RoundTripMessage),
+                             (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_CBC() Failure: Error occured during Cipher_Encrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
     }
 
-    if (0 != Cipher_Decrypt(Cipher,
-                            (const void *)&(RoundTripMessage[0]),
-                            sizeof(RoundTripMessage),
-                            (uint8_t *)&(RoundTripMessage[0]))) {
+    if (-1 == Cipher_Decrypt(Cipher,
+                             (const void *)&(RoundTripMessage[0]),
+                             sizeof(RoundTripMessage),
+                             (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_CBC() Failure: Error occured during Cipher_Decrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
@@ -163,19 +163,19 @@ int Test_Cipher_AES_CFB(void) {
         return 1;
     }
 
-    if (0 != Cipher_Encrypt(Cipher,
-                            (const void *)&(RoundTripMessage[0]),
-                            sizeof(RoundTripMessage),
-                            (uint8_t *)&(RoundTripMessage[0]))) {
+    if (-1 == Cipher_Encrypt(Cipher,
+                             (const void *)&(RoundTripMessage[0]),
+                             sizeof(RoundTripMessage),
+                             (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_CFB() Failure: Error occured during Cipher_Encrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
     }
 
-    if (0 != Cipher_Decrypt(Cipher,
-                            (const void *)&(RoundTripMessage[0]),
-                            sizeof(RoundTripMessage),
-                            (uint8_t *)&(RoundTripMessage[0]))) {
+    if (-1 == Cipher_Decrypt(Cipher,
+                             (const void *)&(RoundTripMessage[0]),
+                             sizeof(RoundTripMessage),
+                             (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_CFB() Failure: Error occured during Cipher_Decrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
@@ -205,19 +205,19 @@ int Test_Cipher_AES_OFB(void) {
         return 1;
     }
 
-    if (0 != Cipher_Encrypt(Cipher,
-                            (const void *)&(RoundTripMessage[0]),
-                            sizeof(RoundTripMessage),
-                            (uint8_t *)&(RoundTripMessage[0]))) {
+    if (-1 == Cipher_Encrypt(Cipher,
+                             (const void *)&(RoundTripMessage[0]),
+                             sizeof(RoundTripMessage),
+                             (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_OFB() Failure: Error occured during Cipher_Encrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
     }
 
-    if (0 != Cipher_Decrypt(Cipher,
-                            (const void *)&(RoundTripMessage[0]),
-                            sizeof(RoundTripMessage),
-                            (uint8_t *)&(RoundTripMessage[0]))) {
+    if (-1 == Cipher_Decrypt(Cipher,
+                             (const void *)&(RoundTripMessage[0]),
+                             sizeof(RoundTripMessage),
+                             (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_OFB() Failure: Error occured during Cipher_Decrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
@@ -247,19 +247,19 @@ int Test_Cipher_AES_CTR(void) {
         return 1;
     }
 
-    if (0 != Cipher_Encrypt(Cipher,
-                            (const void *)&(RoundTripMessage[0]),
-                            sizeof(RoundTripMessage),
-                            (uint8_t *)&(RoundTripMessage[0]))) {
+    if (-1 == Cipher_Encrypt(Cipher,
+                             (const void *)&(RoundTripMessage[0]),
+                             sizeof(RoundTripMessage),
+                             (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_CTR() Failure: Error occured during Cipher_Encrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
     }
 
-    if (0 != Cipher_Decrypt(Cipher,
-                            (const void *)&(RoundTripMessage[0]),
-                            sizeof(RoundTripMessage),
-                            (uint8_t *)&(RoundTripMessage[0]))) {
+    if (-1 == Cipher_Decrypt(Cipher,
+                             (const void *)&(RoundTripMessage[0]),
+                             sizeof(RoundTripMessage),
+                             (uint8_t *)&(RoundTripMessage[0]))) {
         printf("Test_Cipher_AES_CTR() Failure: Error occured during Cipher_Decrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
@@ -290,19 +290,19 @@ int Test_Cipher_ChaCha(void) {
         return 1;
     }
 
-    if (0 != Cipher_Encrypt(Cipher,
-                            (const void *)&(RoundTripMessage[0]),
-                            sizeof(RoundTripMessage),
-                            (uint8_t *)&(RoundTripMessage))) {
+    if (-1 == Cipher_Encrypt(Cipher,
+                             (const void *)&(RoundTripMessage[0]),
+                             sizeof(RoundTripMessage),
+                             (uint8_t *)&(RoundTripMessage))) {
         printf("Test_Cipher_ChaCha() Failure: Error occured during Cipher_Encrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
     }
 
-    if (0 != Cipher_Decrypt(Cipher,
-                            (const void *)&(RoundTripMessage[0]),
-                            sizeof(RoundTripMessage),
-                            (uint8_t *)&(RoundTripMessage))) {
+    if (-1 == Cipher_Decrypt(Cipher,
+                             (const void *)&(RoundTripMessage[0]),
+                             sizeof(RoundTripMessage),
+                             (uint8_t *)&(RoundTripMessage))) {
         printf("Test_Cipher_ChaCha() Failure: Error occured during Cipher_Decrypt()!\n");
         Cipher_Release(Cipher);
         return 1;
