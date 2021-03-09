@@ -95,6 +95,24 @@ ssize_t Cipher_Decrypt_Stream(Cipher_t *Cipher, int fd_In, int fd_Out) {
     }
 }
 
+/*
+    Read_Stream
+
+    This function acts as a helpful wrapper on the basic read() system call.
+    This will better handle errors, EOF detection, and ensure any intermediate
+    read() results are always aligned to the underlying cipher block size
+    until the EOF is reached.
+
+    Inputs:
+    Cipher  -   Pointer to the current Cipher to operate with
+    fd      -   The file descriptor to read from
+    buf     -   Pointer to the buffer to write values to from the stream
+    nBytes  -   Size of the buffer, also indicates the maximum allowed read size
+    nRead   -   Out parameter to report the number of bytes actually read from the stream.
+
+    Outputs:
+    int     -   Returns 0 on success, or nonzero on failure or error
+*/
 int Read_Stream(Cipher_t *Cipher, int fd, void *buf, size_t nBytes, ssize_t *nRead) {
 
     ssize_t MinBlockRead;
@@ -170,6 +188,21 @@ int Read_Stream(Cipher_t *Cipher, int fd, void *buf, size_t nBytes, ssize_t *nRe
     }
 }
 
+/*
+    Write_Stream
+
+    This function acts as a helpful wrapper on the basic write() system call.
+    This will better handle errors, EOF detection, and short writes.
+
+    Inputs:
+    fd          -   The file descriptor to write to
+    buf         -   The buffer of bytes to write to the file descriptor
+    nBytes      -   The length of the buffer to write to the file descriptor
+    nWritten    -   The number of bytes actually written to the file descriptor
+
+    Outputs:
+    int     -   Returns 0 on success, or nonzero on failure or error
+*/
 int Write_Stream(int fd, const void *buf, size_t nBytes, ssize_t *nWritten) {
 
     ssize_t written = 0;

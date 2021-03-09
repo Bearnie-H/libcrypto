@@ -189,7 +189,6 @@ int Cipher_Update_IV(Cipher_t *Cipher, const void *IV);
 
     Outputs:
     ssize_t         -   Returns the number of bytes written, or -1 on error
-
 */
 ssize_t Cipher_Encrypt(Cipher_t *Cipher, const void *Plaintext, size_t Length, uint8_t *Ciphertext);
 
@@ -216,7 +215,6 @@ ssize_t Cipher_Encrypt(Cipher_t *Cipher, const void *Plaintext, size_t Length, u
 
     Outputs:
     ssize_t -   Returns -1 on errors, or the number of bytes successfully transferred.
-
 */
 ssize_t Cipher_Encrypt_Stream(Cipher_t* Cipher, int fd_In, int fd_Out);
 
@@ -237,7 +235,6 @@ ssize_t Cipher_Encrypt_Stream(Cipher_t* Cipher, int fd_In, int fd_Out);
 
     Outputs:
     ssize_t         -   Returns the number of bytes written, or -1 on error
-
 */
 ssize_t Cipher_Decrypt(Cipher_t *Cipher, const void *Ciphertext, size_t Length, uint8_t *Plaintext);
 
@@ -264,9 +261,9 @@ ssize_t Cipher_Decrypt(Cipher_t *Cipher, const void *Ciphertext, size_t Length, 
 
     Outputs:
     ssize_t -   Returns -1 on errors, or the number of bytes successfully transferred.
-    
 */
 ssize_t Cipher_Decrypt_Stream(Cipher_t* Cipher, int fd_In, int fd_Out);
+
 /*
     Cipher_Release
 
@@ -278,7 +275,6 @@ ssize_t Cipher_Decrypt_Stream(Cipher_t* Cipher, int fd_In, int fd_Out);
 
     Outputs:
     void    -   The Cipher_t and all held resources are safely released.
-
 */
 void Cipher_Release(Cipher_t *Cipher);
 
