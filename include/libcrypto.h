@@ -7,7 +7,7 @@
     This library provides a correct implementation of these ciphers,
     but this is not suitable for production systems, as only minimal
     effort has been put towards addressing side-channel or timing
-    attacks. This library onto guarantees algorithmic correctness.
+    attacks. This library only guarantees algorithmic correctness.
 */
 #ifndef LIBCRYPTO_H
 #define LIBCRYPTO_H
@@ -277,12 +277,6 @@ ssize_t Cipher_Decrypt_Stream(Cipher_t* Cipher, int fd_In, int fd_Out);
     void    -   The Cipher_t and all held resources are safely released.
 */
 void Cipher_Release(Cipher_t *Cipher);
-
-#if defined(TESTING) || defined(DEBUGGER)
-
-int Test_Libcrypto(void);
-
-#endif
 
 #ifdef __cplusplus
 }

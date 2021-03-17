@@ -1,6 +1,10 @@
+/*
+    This file is simply the entry-point for testing and debugging of the
+    library. This will execute the exposed top-level testing function
+    for the full library, returning the number of failed tests back to
+    the shell.
+*/
 #include <stdio.h>
-
-#include "../include/libcrypto.h"
 
 #if defined(TESTING) || defined(DEBUGGER)
 
@@ -30,9 +34,14 @@ int Test_Libcrypto(void) {
 
 int main(int argc, char **argv) {
 
+    /*
+        This little block is only here to suppress compiler warnings/errors
+        for unused parameters. We want these errors for compiling everything
+        except this file, so it's easiest to just echo this back to suppress
+        these errors in a reasonable way.
+    */
     int i;
-
-    printf("Executing: %s", argv[0]);
+    printf("Executing testing stub: %s", argv[0]);
     for (i = 1; i < argc; i++) {
         printf(" %s", argv[i]);
     }
@@ -44,13 +53,6 @@ int main(int argc, char **argv) {
 #if defined(TESTING) || defined(DEBUGGER)
     return Test_Libcrypto();
 #else
-
-    /*
-        Otherwise, do the standard application logic.
-    */
-
-    /* ... */
-
     return 0;
 #endif
 }
