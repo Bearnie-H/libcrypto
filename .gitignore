@@ -54,3 +54,6 @@ dkms.conf
 # Artefact directories
 build
 products
+
+# Editor files
+.vscode
