@@ -195,7 +195,7 @@ ssize_t Cipher_Encrypt(Cipher_t *Cipher, const void *Plaintext, size_t Length, u
 /*
     Cipher_Encrypt_Stream
 
-    This fucnction will use the Cipher_t to Encrypt the given stream,
+    This function will use the Cipher_t to Encrypt the given stream,
     represented by the file descriptor fd_In, writing the resulting
     output to the file descriptor fd_Out. These may be any file descriptors
     capable of being operated on by the standard read() and write() calls.
@@ -241,7 +241,7 @@ ssize_t Cipher_Decrypt(Cipher_t *Cipher, const void *Ciphertext, size_t Length, 
 /*
     Cipher_Decrypt_Stream
 
-    This fucnction will use the Cipher_t to Decrypt the given stream,
+    This function will use the Cipher_t to Decrypt the given stream,
     represented by the file descriptor fd_In, writing the resulting
     output to the file descriptor fd_Out. These may be any file descriptors
     capable of being operated on by the standard read() and write() calls.

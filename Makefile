@@ -4,15 +4,15 @@
 CC              := gcc
 WARNINGS        := -Wall -Werror -Wpedantic -Wextra
 WARNINGS_IGNORE :=
-CPPFLAGS        := -ansi $(WARNINGS) $(WARNINGS_IGNORE)
+CFLAGS          := -ansi $(WARNINGS) $(WARNINGS_IGNORE)
 LIBTOOL         := ar -rcs
 FMTTOOL         := $(shell which clang-format)
 
 #   Define the flags for the various different end-result build targets
-RELFLAGS  := $(CPPFLAGS) -O2 -DNDEBUG
-DBGFLAGS  := $(CPPFLAGS) -g -O0 -DDEBUG
-DBGRFLAGS := $(CPPFLAGS) -g -O0 -DDEBUG -DDEBUGGER
-TESTFLAGS := $(CPPFLAGS) -g -O0 -DDEBUG -DDEBUGGER -DTESTING
+RELFLAGS  := $(CFLAGS) -O2 -DNDEBUG
+DBGFLAGS  := $(CFLAGS) -g -O0 -DDEBUG
+DBGRFLAGS := $(CFLAGS) -g -O0 -DDEBUG -DDEBUGGER
+TESTFLAGS := $(CFLAGS) -g -O0 -DDEBUG -DDEBUGGER -DTESTING
 
 #   Other shell command settings
 RM    := rm -f
@@ -29,7 +29,7 @@ TESTSUFFIX   := .out
 
 #   Applicaton sub-components
 #   Add in and subfolders required to make the full application here.
-COMPONENTS     := src/cipher 
+COMPONENTS     := src/cipher
 COMPONENTS     += src/AES src/AES/context src/AES/round
 COMPONENTS     += src/ChaCha src/ChaCha/context src/ChaCha/round
 TESTCOMPONENTS := src

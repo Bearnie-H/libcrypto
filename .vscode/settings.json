@@ -16,5 +16,13 @@
         "chacha_constants.h": "c",
         "chacha_round.h": "c",
         "stdio.h": "c"
-    }
+    },
+    "cSpell.ignoreWords": [
+        "algo",
+        "cipher",
+        "libcrypto",
+        "rijndael",
+        "struct",
+        "t"
+    ]
 }

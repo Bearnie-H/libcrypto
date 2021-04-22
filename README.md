@@ -7,7 +7,7 @@ not include any of the additional message authentication features typically
 bundled with the ciphers.
 
 This library is fully ANSI-C, and has been tested for portability over for both OS X,
-and Linux, as well as ARM and x86. Endianness has not been tested for portability,
+and Linux, as well as ARM and x86. Endian-ness has not been tested for portability,
 but this was not an important goal for this project.
 # THIS LIBRARY SHOULD NOT BE USED IN PRODUCTION SOFTWARE
 
@@ -22,8 +22,8 @@ Timing attacks and other side-channel attacks are almost certainly present
 in this library. The only guarantee is that the ciphers as implemented are
 algorithmically correct for both the block operations, and the multi-block
 mode of operation functionality. Addressing these modes of attack typically
-involves reframing the algorithms in terms of pre-computed lookup tables and
-esoteric-looking branchless code. These have the great benefit of removing
+involves re-framing the algorithms in terms of pre-computed lookup tables and
+esoteric-looking branch-free code. These have the great benefit of removing
 avenues of attack, but at the cost of obfuscating the connection between
 source code and the underlying mathematics.
 
@@ -100,7 +100,7 @@ tool. There are a number of valuable targets to select from:
 * debug
     * This will build the library into a statically linked library, with all debugging symbols
     present and no optimization present. This is intended to allow debugging through an executable
-    which links agains this library.
+    which links against this library.
     * This defines the macro `DEBUG`.
 
 * release
@@ -129,6 +129,9 @@ used outside of educational or exploratory purposes. If you do wish to install t
 library, simply add the `release` target to your `$LD_LIBRARY_PATH` and the top-level header
 `libcrypto.h` to your `$INCLUDE_PATH`.
 
+If you want to build the library into some larger project, the top-level Makefile
+can be called easily from another Makefile. Simply ensure the correct target(s)
+are passed down using a rule similar to `$(MAKE) -C <libcrypto directory> $(MAKECMDGOALS)`.
 # Possible Extensions
 
 This library is far from *complete*, from the learning perspective. Additional ciphers,

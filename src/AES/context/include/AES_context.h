@@ -15,7 +15,7 @@ extern "C" {
 
     The AES-specific context object to group the set of algorithm-specific
     parameters, state, and key schedule. This abstracts away and generalizes
-    some of the algorithm values, parameterizing them on values in this
+    some of the algorithm values, generalizing them based on values of this
     context object.
 */
 typedef struct AES_Context_t {
