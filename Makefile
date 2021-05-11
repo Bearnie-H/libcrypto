@@ -71,24 +71,28 @@ export ROOTDIR RELBUILDDIR DBGBUILDDIR DBGRBUILDDIR TESTBUILDDIR
 export RELFLAGS DBGFLAGS DBGRFLAGS TESTFLAGS
 
 #   Set up the .PHONY targets
-.PHONY: all prep release test debug debugger clean clean-hard remake $(TESTCOMPONENTS) $(COMPONENTS)
+.PHONY: all help prep release test debug debugger clean clean-hard remake $(TESTCOMPONENTS) $(COMPONENTS)
+
+help: ## Show this help menu.
+	@echo "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) | sed -e 's/:.*##\s*/:/' | column -c2 -t -s :)"
+
 
 #   Top level general targets
 #   Ensure test completes before attempting any other targets, to ensure
 #   the testing suite successfully exits.
-all: prep
+all: prep ## Build and run the test suite, then the debugger, debug, and release targets.
 	$(MAKE) test
 	$(MAKE) debug debugger release
 
-prep:
+prep: ## Prepare the build and output directory trees.
 	@mkdir -p $(RELBUILDDIR) $(RELOUTDIR) $(DBGBUILDDIR) $(DBGOUTDIR) $(DBGRBUILDDIR) $(DBGROUTDIR) $(TESTBUILDDIR) $(TESTOUTDIR)
 
-clean-hard: clean
+clean-hard: clean ## Run clean, but also remove any and all executables and the dependency files.
 	$(RM) $(RELEXE) $(DBGEXE) $(DBGREXE) $(TESTEXE)
 
-clean: $(COMPONENTS) $(TESTCOMPONENTS)
+clean: $(COMPONENTS) $(TESTCOMPONENTS) ## Remove any and all of the object files.
 
-remake: prep
+remake: prep ## Perform a clean then an all
 	$(MAKE) clean
 	$(MAKE) all
 
@@ -102,22 +106,22 @@ $(TESTCOMPONENTS):
 
 
 #   Testing Build Targets
-test: prep $(TESTCOMPONENTS) $(COMPONENTS)
+test: prep $(TESTCOMPONENTS) $(COMPONENTS) ## Build and run the testing executable.
 	$(CC) -o $(TESTEXE) $(TESTOBJS)
 	$(TESTEXE)
 
 
 #   Debug Build Targets
-debug: prep $(COMPONENTS)
+debug: prep $(COMPONENTS) ## Build the library with all of the debugging symbols enabled.
 	$(LIBTOOL) $(DBGEXE) $(filter-out %test.o, $(DBGOBJS))
 
 
 #   Debugger Build Targets
-debugger: prep $(TESTCOMPONENTS) $(COMPONENTS)
+debugger: prep $(TESTCOMPONENTS) $(COMPONENTS) ## Build the library with debugging enabled and an entry point to the testing suite.
 	$(CC) -o $(DBGREXE) $(DBGROBJS)
 
 
 #   Release Build Targets
-release: prep $(COMPONENTS)
+release: prep $(COMPONENTS) ## Build the library into a release mode, with debugging off, optimizations on, and the resulting library stripped.
 	$(LIBTOOL) $(RELEXE) $(filter-out %test.o, $(RELOBJS))
 	$(STRIP) $(RELEXE)
